@@ -5,6 +5,8 @@ Repository containing the Lemanics' team project for the 2022 edition of the nip
 # Diagnostics project
 TEST SORAYA EDITING README
 
+The purpose of this project is to implement a framework to detect outliers.
+
 Scripts go in the `scripts` directory.
 
 Library code (Python modules) goes in the `findoutlie` directory.
