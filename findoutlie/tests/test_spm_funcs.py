@@ -13,29 +13,22 @@ import os.path as op
 import sys
 
 MY_DIR = op.dirname(__file__)
-EXAMPLE_FILENAME = 'ds107_sub012_t1r2_small.nii'
+EXAMPLE_FILENAME = "ds107_sub012_t1r2_small.nii"
 
-# Here you should add the directory containing the findoutlie
-# directory to the Python path.
-# Hint: sys.path
-# Hint: see the solutions if you are stuck.
-# +++your code here+++
-
+sys.path.append("/Users/hugofluhr/code/nipraxis/diagnostics-Lemanics/findoutlie/")
 import numpy as np
 
 import nibabel as nib
 
-# This import needs the directory containing the findoutlie directory
-# on the Python path.
 from spm_funcs import get_spm_globals, spm_global
 
 
 def test_spm_globals():
     # Test get_spm_globals and spm_global functions
     example_path = op.join(MY_DIR, EXAMPLE_FILENAME)
-    expected_values = np.loadtxt(op.join(MY_DIR, 'global_signals.txt'))
+    expected_values = np.loadtxt(op.join(MY_DIR, "global_signals.txt"))
     glob_vals = get_spm_globals(example_path)
-    assert glob_vals is not None, 'Did you forget to return the values?'
+    assert glob_vals is not None, "Did you forget to return the values?"
     assert np.allclose(glob_vals, expected_values, rtol=1e-4)
     img = nib.load(example_path)
     data = img.get_fdata()
@@ -46,7 +39,7 @@ def test_spm_globals():
     assert np.allclose(globals, expected_values, rtol=1e-4)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # File being executed as a script
     test_spm_globals()
-    print('Tests passed')
+    print("Tests passed")
