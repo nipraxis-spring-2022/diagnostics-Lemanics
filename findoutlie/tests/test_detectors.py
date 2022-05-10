@@ -14,7 +14,7 @@ import sys
 
 MY_DIR = op.dirname(__file__)
 
-sys.path.append("/Users/hugofluhr/code/nipraxis/diagnostics-Lemanics/findoutlie/")
+sys.path.append("findoutlie")
 import numpy as np
 
 from detectors import iqr_detector

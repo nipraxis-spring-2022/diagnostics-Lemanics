@@ -15,7 +15,7 @@ import sys
 MY_DIR = op.dirname(__file__)
 EXAMPLE_FILENAME = "ds107_sub012_t1r2_small.nii"
 
-sys.path.append("/Users/hugofluhr/code/nipraxis/diagnostics-Lemanics/findoutlie/")
+sys.path.append("findoutlie")
 import numpy as np
 
 import nibabel as nib
