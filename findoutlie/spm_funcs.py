@@ -21,6 +21,8 @@ or better, in IPython::
 
 # Any imports you need
 # +++your code here+++
+import numpy as np
+import nibabel as nib
 
 
 def spm_global(vol):
@@ -36,8 +38,9 @@ def spm_global(vol):
     g : float
         SPM global metric for `vol`
     """
-    # +++your code here+++
-    # return
+
+    T = np.mean(vol) / 8
+    return np.mean(vol[vol > T])
 
 
 def get_spm_globals(fname):
@@ -53,5 +56,13 @@ def get_spm_globals(fname):
     spm_vals : array
         SPM global metric for each 3D volume in the 4D image.
     """
-    # +++your code here+++
-    # return
+    func_img = nib.load(fname)
+    n_tp = func_img.shape[-1]
+
+    func_dat = func_img.get_fdata()
+
+    global_metric = np.zeros((n_tp))
+    for t in range(n_tp):
+        global_metric[t] = spm_global(func_dat[..., t])
+
+    return global_metric

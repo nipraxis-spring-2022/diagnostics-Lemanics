@@ -20,6 +20,8 @@ MY_DIR = op.dirname(__file__)
 # Hint: see the solutions if you are stuck.
 # +++your code here+++
 
+sys.path.append('findoutlie')
+
 import numpy as np
 
 # This import needs the directory containing the findoutlie directory

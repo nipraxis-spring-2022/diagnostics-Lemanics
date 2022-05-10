@@ -12,6 +12,7 @@ requirements are met and raise an error otherwise.
 
 # Any imports you need
 # +++your code here+++
+import numpy as np
 
 
 def iqr_detector(measures, iqr_proportion=1.5):
@@ -51,3 +52,15 @@ def iqr_detector(measures, iqr_proportion=1.5):
     # * You'll likely need np.logical_or
     # https://textbook.nipraxis.org/numpy_logical.html
     # +++your code here+++
+
+    # Storing 1st and 3rd quartiles
+    Q1, Q3 = np.percentile(measures, [25, 75])
+    # Computing IQR
+    IQR =  Q3 - Q1
+
+    # Setting the values above the threshold as outliers first
+    outliers = measures > (Q3 + IQR * iqr_proportion)
+    # then adding those that are below
+    outliers += measures < (Q1 - IQR * iqr_proportion)
+
+    return outliers.astype(bool)
