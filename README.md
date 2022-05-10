@@ -3,7 +3,6 @@
 Repository containing the Lemanics' team project for the 2022 edition of the nipraxis course.
 
 # Diagnostics project
-TEST SORAYA EDITING README
 
 The purpose of this project is to implement a framework to detect outliers.
 
@@ -54,5 +53,3 @@ data/group-01/sub-03/func/sub-03_task-taskzero_run-02_bold.nii.gz, 101, 102, 132
 data/group-01/sub-08/func/sub-08_task-taskzero_run-01_bold.nii.gz, 0, 1, 2, 166, 167
 data/group-01/sub-09/func/sub-08_task-taskzero_run-01_bold.nii.gz, 3
 ```
-
-Thanks for good luck
