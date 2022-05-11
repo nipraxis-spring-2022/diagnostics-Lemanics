@@ -56,13 +56,13 @@ def validate_data(data_directory):
     # ValueError
     hash_file_path = os.path.join(data_directory, "group-00/hash_list.txt")
     with open(hash_file_path) as f:
-        lines = f.readlines()
+        lines = f.read().splitlines()
     for line in lines :
         split_line = line.split(" ")
         filename = split_line[1]
         correct_hash = split_line[0]
 
-        file_path = os.path.join(data_directory, filename).replace("\n","")
+        file_path = os.path.join(data_directory, filename)
         actual_hash = file_hash(file_path)
         if correct_hash != actual_hash :
             raise ValueError(f"Oh no, seems that {filename} is corrupted")
