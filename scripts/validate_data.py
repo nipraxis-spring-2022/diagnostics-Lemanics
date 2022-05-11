@@ -25,8 +25,7 @@ def file_hash(filename):
     """
     with open(filename, 'rb') as fobj:
         file_bytes = fobj.read()
-    hash = hashlib.sha1(file_bytes).hexdigest()
-    return hash
+    return hashlib.sha1(file_bytes).hexdigest()
 
 
 def validate_data(data_directory):
@@ -70,7 +69,6 @@ def validate_data(data_directory):
     
     print('All good! \n')
 
-    #raise NotImplementedError('This is just a template -- you are expected to code this.')
 
 
 def main():
