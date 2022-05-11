@@ -23,9 +23,9 @@ def file_hash(filename):
     hash : str
         SHA1 hexadecimal hash string for contents of `filename`.
     """
-    # Open the file, read contents as bytes.
-    # Calculate, return SHA1 has on the bytes from the file.
-    raise NotImplementedError('This is just a template -- you are expected to code this.')
+    with open(filename, 'rb') as fobj:
+        file_bytes = fobj.read()
+    return hashlib.sha1(file_bytes).hexdigest()
 
 
 def validate_data(data_directory):
@@ -54,7 +54,21 @@ def validate_data(data_directory):
     # Calculate actual hash for given filename.
     # If hash for filename is not the same as the one in the file, raise
     # ValueError
-    raise NotImplementedError('This is just a template -- you are expected to code this.')
+    hash_file_path = os.path.join(data_directory, "group-00/hash_list.txt")
+    with open(hash_file_path) as f:
+        lines = f.read().splitlines()
+    for line in lines :
+        split_line = line.split(" ")
+        filename = split_line[1]
+        correct_hash = split_line[0]
+
+        file_path = os.path.join(data_directory, filename)
+        actual_hash = file_hash(file_path)
+        if correct_hash != actual_hash :
+            raise ValueError(f"Oh no, seems that {filename} is corrupted")
+    
+    print('All good! \n')
+
 
 
 def main():
