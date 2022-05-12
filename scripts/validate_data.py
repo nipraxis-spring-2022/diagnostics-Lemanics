@@ -58,13 +58,8 @@ def validate_data(data_directory):
     # If hash for filename is not the same as the one in the file, raise
     # ValueError
     
-    #path
-    general_path = os.path.split(os.getcwd())[0] #not to have the /script
-    data_directory_full=os.path.join(general_path,data_directory)
-    #so as to run just with the argument data as it is in the example
-    group_file_path = os.path.join(data_directory_full, "group-00")
-    hash_file_path = os.path.join(group_file_path, "hash_list.txt")
-    # hash_file_path = os.path.join(data_directory, "group-00/hash_list.txt")
+    
+    hash_file_path = os.path.join(data_directory, "group-00", "hash_list.txt")
     
     with open(hash_file_path) as f:
         lines = f.read().splitlines()
