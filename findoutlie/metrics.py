@@ -29,9 +29,7 @@ def dvars(img):
     # You may be be able to solve this in four lines, without a loop.
     # But solve it any way you can.
     data = img.get_fdata()
-    data = np.reshape(data, (-1, data.shape[-1]))
-    data_shift = np.roll(data, 1, axis=-1)
-    diff =  data_shift - data
-    diff = diff[...,1:]
+    voxel_per_time = np.reshape(data, (-1, data.shape[-1]))
+    diff = np.diff(voxel_per_time)
     dvals = np.sqrt(np.mean(diff ** 2, axis=0))
     return dvals
