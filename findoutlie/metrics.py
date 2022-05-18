@@ -1,7 +1,32 @@
 """ Scan outlier metrics
+
+Currently implemented metrics : 
+    - dvars
+
+To implement : 
+    - ...
+
+Template function : 
+
+def metric_name(img):
+    " Calculate metric on Nibabel image `img`
+
+    metric description
+
+    Parameters
+    ----------
+    img : nibabel image
+
+    Returns
+    -------
+    metric : 1D array
+        One-dimensional array containing the computed metric
+    "
+    --- do stuff ---
+    return metric
+
 """
 
-#+ Your imports here.
 import numpy as np
 
 def dvars(img):
