@@ -49,23 +49,23 @@ For the metric, the idea are - for now :
     
 - **Metrics based on spatial information**
     - Shannon entropy of voxel intensities for bluriness and ghosting [Atkinson1997](https://ieeexplore.ieee.org/document/650886).Lower values are better.
-    cf *"Shannon entropy H was calculated in each voxel independently (i.e. using the voxel probability distribution obtained by standard histogram method)", see the full formula in the article below*[DiNuzzo 2003](https://www.researchgate.net/publication/277668496_Shannon_entropy_method_applied_to_fMRI_data_series_during_evoked_and_resting_state_activity)
+    cf *"Shannon entropy H was calculated in each voxel independently (i.e. using the voxel probability distribution obtained by standard histogram method)", see the full formula in the article below* [DiNuzzo 2003](https://www.researchgate.net/publication/277668496_Shannon_entropy_method_applied_to_fMRI_data_series_during_evoked_and_resting_state_activity)
 
 
 - **Metrics based on temporal information**
     - DVARS, rate of change per frame (can be spatial or temporal,cf practical)
     - tSNR cf below in SNR
 
---> Updating & using [findoutlie/metric.py/metric_name](findoutlie/metric.py)
+--> Updating & using [findoutlie/metric.py/metric_name](/findoutlie/metric.py)
 
 ## Distribution
 The distribution of all the metrics in regards to all the database should be plot to faciliate the detection of outliers (Boxplots per metrics ?).
 
---> Updating & using [findoutlie/outfind.py/detect_outliers](findoutlie/outfind.py)
-    --> should use the [findoutlie/detectors.py/iqr_detector](findoutlie/detectors.py) which detect outliers in measures using interquartile range
-    --> then outfind.py will be used by [scripts/find_outliers.py](scripts/find_outliers.py) to print the list of outliers
+--> Updating & using [findoutlie/outfind.py/detect_outliers](/findoutlie/outfind.py)
+    --> should use the [findoutlie/detectors.py/iqr_detector](/findoutlie/detectors.py) which detect outliers in measures using interquartile range
+    --> then outfind.py will be used by [scripts/find_outliers.py](/scripts/find_outliers.py) to print the list of outliers
 
---> Therefore the function to plot the distribution should be in [scripts/find_outliers.py](scripts/find_outliers.py) 
+--> Therefore the function to plot the distribution should be in [scripts/find_outliers.py](/scripts/find_outliers.py) 
 
 ## Computation of a final score
 How to ? - to fill
