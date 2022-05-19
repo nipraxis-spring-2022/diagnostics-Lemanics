@@ -52,15 +52,15 @@ def load_sub_run(sub_id, run_num, **kwargs):
 
     Parameters
     ----------
-    sub_id : int
-        Subject ID to load data from.
-    run_num : int
-        Run number to load.
+    sub_id : int or list
+        Subject ID(s) to load data from.
+    run_num : int or list
+        Run number(s) to load.
 
     Returns
     -------
     func_img
-        Nifti image of the functional run.
+        Nifti image(s) of the functional run(s).
 
     Raises
     ------
