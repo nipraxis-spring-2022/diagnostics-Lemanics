@@ -53,15 +53,24 @@ For the metric, the idea are - for now :
 
 
 - **Metrics based on temporal information**
-    - DVARS, cf practical, rate of change per frame
+    - DVARS, rate of change per frame (can be spatial or temporal,cf practical)
     - tSNR cf below in SNR
 
-## Computation of a final score
-How to ? - to fill
+--> Updating & using [findoutlie/metric.py/metric_name](findoutlie/metric.py)
 
 ## Distribution
 The distribution of all the metrics in regards to all the database should be plot to faciliate the detection of outliers (Boxplots per metrics ?).
 
+--> Updating & using [findoutlie/outfind.py/detect_outliers](findoutlie/outfind.py)
+    --> should use the [findoutlie/detectors.py/iqr_detector](findoutlie/detectors.py) which detect outliers in measures using interquartile range
+    --> then outfind.py will be used by [scripts/find_outliers.py](scripts/find_outliers.py) to print the list of outliers
+
+--> Therefore the function to plot the distribution should be in [scripts/find_outliers.py](scripts/find_outliers.py) 
+
+## Computation of a final score
+How to ? - to fill
+
+Independent metric, an array ? Or different weight should be attributed per metric ?
 
 # Installation & Usage
 ## Get the data
