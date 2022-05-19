@@ -39,7 +39,7 @@ The idea is for now to pick two metrics (more if we have time, 1 metric per grou
 
 For the metric, the idea are - for now :
 
-    *this part below was added by Soraya, let me know what you think and feel free to add your metrics. I think picking SNR and Shannon entropy could be nice.Shannon will be more difficult to implement. Then if we have time we can pick other one.*
+*this part below was added by Soraya, let me know what you think and feel free to add your metrics. I think picking SNR and Shannon entropy could be nice.Shannon will be more difficult to implement. Then if we have time we can pick other one.*
 
 - **Metrics based on noise measurements - pick 1 metric**
     - **Classic signal to noise ratio (SNR)**
