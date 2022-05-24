@@ -8,7 +8,7 @@ Repository containing the Lemanics' team project for the 2022 edition of the nip
 README/
 [steps](README.md#installation--usage -->
 * [Diagnostics project](#diagnostics-project)
-* [Project plan](#proejct-plan)
+* [Project plan](#project-plan)
 * [Installation & Usage](#installation--usage)
 
 <!-- * [Common](#Common issues - debugging)
