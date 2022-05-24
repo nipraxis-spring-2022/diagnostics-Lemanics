@@ -10,7 +10,6 @@ or better, in IPython::
     %run findoutlie/tests/test_data_load.py
 """
 
-from ast import Raise
 import os.path as op
 import nibabel as nib
 
@@ -37,13 +36,16 @@ def get_fname(sub_id, run_num, data_dir = "data/"):
         Type of "sub_id" or "run_num" was not recognized, expected "int".
     """
 
-    if type(sub_id) != int or type(run_num) != int:
+    try:
+        filename = f"sub-{sub_id:02d}_task-taskzero_run-{run_num:02d}_bold.nii.gz"
+    except ValueError:
+        print('Fixing type for "sub_id" or/and "run_num"')
+        filename = f"sub-{int(sub_id):02d}_task-taskzero_run-{int(run_num):02d}_bold.nii.gz"
+    except:
         raise TypeError('Unrecognized type for "sub_id" or/and "run_num", expected "int",',
-                        f'got {type(sub_id)}, {type(run_num)}.')
+                        f'got {type(sub_id)}, {type(run_num)}')
 
-
-    filename = f"sub-{sub_id:02}_task-taskzero_run-{run_num:02}_bold.nii.gz"
-    path_to_run = op.join(data_dir, "group-00", f"sub-{sub_id:02}", "func", filename)
+    path_to_run = op.join(data_dir, "group-00", f"sub-{sub_id:02d}", "func", filename)
 
     return path_to_run
 
@@ -81,7 +83,7 @@ def load_sub_run(sub_id, run_num, **kwargs):
             path_to_run = get_fname(sub, run, **kwargs)
 
             if not op.isfile(path_to_run):
-                raise FileNotFoundError(f'File "{path_to_run}" does not exist.')
+                raise FileNotFoundError(f'File "{path_to_run}" does not exist')
 
             images.append(nib.load(path_to_run))
 
