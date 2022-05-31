@@ -71,6 +71,14 @@ How to ? - to fill
 
 Independent metric, an array ? Or different weight should be attributed per metric ?
 
+## NB - Ratings
+Ratings on :
+• the quality of your outlier detection as assessed by the improvement in the statistical testing for the experimental model after removing the outliers;
+• the generality of your outlier detection as assessed by the improvement in the statistical testing for the experimental model after removing the outliers, for another similar dataset;
+• the quality of your code;
+• the quality and transparency of your process, from your interactions on github;
+the quality of your arguments about the scans rejected as outliers.
+
 # Installation & Usage
 ## Get the data
 
