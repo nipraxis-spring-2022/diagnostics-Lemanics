@@ -299,13 +299,11 @@ def easy_masking(image_fname,value_mask,plot=True):
 
     filename,img,data=get_image(image_fname)
 
-    brain_mask = np.where(img > value_mask, 1, 0)
+    brain_mask = np.where(data > float(value_mask), 1, 0)
 
     if plot:
         #all the value in the img above value_mask will be set to 1
-        plt.imshow(brain_mask, cmap='gray')
-        plt.axis('off')
-        plt.show()
+        #plt.imshow(brain_mask, cmap='gray')
         # Save as nii
         print("AS FOR NOW in testing mode --> generating & saving outputs. Comment the lines below in the final code.")
         print("---Saving as nii mean map across time adn sd map. \nWill be in /output_for_tests/")
