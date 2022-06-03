@@ -11,7 +11,8 @@ requirements are met and raise an error otherwise.
 """
 
 import numpy as np
-import metrics
+# This should be later removed as "compute_metric()" will be moved to "metrics.py"
+import findoutlie.metrics as metrics
 
 def compute_metric(img, metric_name = 'dvars', **kwargs):
     """ Compute the metric value of a 4D image for a specified metric name.
@@ -52,7 +53,6 @@ def compute_outliers(metric_values, n_timepoints, detector_name = 'iqr_detector'
         Outlier mask timeframe with 1 if the frame is considered as an outlier and 0 otherwise.
     """
 
-    #detector_func = getattr(detectors, detector_name)
     detector_func = globals()[detector_name]
     outlier_tf = detector_func(metric_values, **kwargs)
 
