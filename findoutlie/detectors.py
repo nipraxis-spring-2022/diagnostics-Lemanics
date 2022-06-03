@@ -11,7 +11,81 @@ requirements are met and raise an error otherwise.
 """
 
 import numpy as np
+import metrics
+import detectors
 
+def compute_metric(img, metric_name = 'dvars', **kwargs):
+    """ Compute the metric value of a 4D image for a specified metric name.
+
+    Parameters
+    ----------
+    img : nibabel image
+        Functional 4D image
+    metric_name : str, optional
+        Name of the metric to compute, by default 'dvars'
+
+    Returns
+    -------
+    numpy array
+        Metric values at each timepoints (usually of size n_timepoints but could be less)
+    """
+
+    metric_func = getattr(metrics, metric_name)
+    metric_tf = metric_func(img, **kwargs)
+
+    return metric_tf
+
+def compute_outliers(metric_values, n_timepoints, detector_name = 'iqr_detector', **kwargs):
+    """ Compute the outlier mask timeframe of a metric array for a specified detector.
+
+    Parameters
+    ----------
+    metric_values : numpy array
+        Metric value at each timepoint
+    n_timepoints : int
+        Number of timepoints in the functional data
+    detector_name : str
+        Name of the detector to use in the outlier detection
+
+    Returns
+    -------
+    numpy array (n_timepoints)
+        Outlier mask timeframe with 1 if the frame is considered as an outlier and 0 otherwise.
+    """
+
+    detector_func = getattr(detectors, detector_name)
+    outlier_tf = detector_func(metric_values, **kwargs)
+
+    while len(outlier_tf) < n_timepoints:
+        outlier_tf = np.insert(outlier_tf, 0, 0)
+
+    return outlier_tf
+
+def consensus_outliers(outlier_tfs, decision = 'all'):
+    """ Decide if a frame is to be considered as outlier or not based on the outcome of all metrics.
+
+    Parameters
+    ----------
+    outlier_tfs : numpy array (n_metrxi x n_timepoints)
+        Array with the outlier mask timeframe for each metric
+    decision : str, optional
+        Type of the decisions for the final mask vector ('all', 'any', etc), by default 'all'
+
+    Returns
+    -------
+    numpy array
+        Outlier mask timeserie with the final decision on outlier detection
+    """
+
+    if type(outlier_tfs) != np.array:
+        outlier_tfs = np.array(outlier_tfs)
+
+    if decision == 'all':
+        outlier_decision_tf = np.logical_and(outlier_tfs, axis = 0)
+    elif decision == 'any':
+        outlier_decision_tf = np.logical_or(outlier_tfs, axis = 0)
+
+    return outlier_decision_tf
 
 def iqr_detector(measures, iqr_proportion=1.5):
     """Detect outliers in `measures` using interquartile range.
