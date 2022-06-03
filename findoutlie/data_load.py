@@ -92,3 +92,29 @@ def load_sub_run(sub_id, run_num, **kwargs):
         images = images[0]
 
     return images
+
+def load_image(fname):
+    """ Load the functional 4D image from a filepath
+
+    Parameters
+    ----------
+    fname : str
+        Path to the nifit file
+
+    Returns
+    -------
+    nibabel image
+        Functional 4D image
+
+    Raises
+    ------
+    FileNotFoundError
+        Specified fname was not found.
+    """
+
+    if not op.isfile(fname):
+        raise FileNotFoundError(f'File "{fname}" does not exist')
+
+    image = nib.load(fname)
+
+    return image
