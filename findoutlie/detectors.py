@@ -81,9 +81,9 @@ def consensus_outliers(outlier_tfs, decision = 'all'):
         outlier_tfs = np.array(outlier_tfs)
 
     if decision == 'all':
-        outlier_decision_tf = np.logical_and(outlier_tfs, axis = 0)
+        outlier_decision_tf = (outlier_tfs.sum(axis = 0) == outlier_tfs.shape[0])
     elif decision == 'any':
-        outlier_decision_tf = np.logical_or(outlier_tfs, axis = 0)
+        outlier_decision_tf = (outlier_tfs.sum(axis = 0)  > 0)
 
     return outlier_decision_tf
 
