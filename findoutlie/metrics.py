@@ -54,7 +54,7 @@ def dvars(img):
     # You may be be able to solve this in four lines, without a loop.
     # But solve it any way you can.
     data = img.get_fdata()
-    voxel_per_time = np.reshape(data, (-1, data.shape[-1])) #np.reshape(data,new_shape)
+    voxel_per_time = data.reshape(-1, data.shape[-1]) #np.reshape(data,new_shape)
     diff = np.diff(voxel_per_time)
     dvals = np.sqrt(np.mean(diff ** 2, axis=0))
     return dvals
@@ -88,8 +88,8 @@ def coefficient_of_variation(img):
 
     """
     data = img.get_fdata()
-    CV=np.std(data, axis=(0,1,2))/np.mean(data, axis=(0,1,2))
+    cv=np.std(data, axis=(0,1,2))/np.mean(data, axis=(0,1,2))
 
-    return CV
+    return cv
 
 
