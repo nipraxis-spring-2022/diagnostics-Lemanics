@@ -40,7 +40,7 @@ def detect_outliers(fname):
 
     for i, (metric_name, detector_name) in enumerate(zip(metrics_list, detectors_list)):
         # Later to be called from metrics.py
-        metric = detectors.compute_metric(image, metric_name)
+        metric = metrics.compute_metric(image, metric_name)
         outlier_tfs[i] = detectors.compute_outliers(metric, n_timepoints, detector_name)
 
     outlier_decision_tf = detectors.consensus_outliers(outlier_tfs)
