@@ -11,29 +11,6 @@ requirements are met and raise an error otherwise.
 """
 
 import numpy as np
-# This should be later removed as "compute_metric()" will be moved to "metrics.py"
-import findoutlie.metrics as metrics
-
-def compute_metric(img, metric_name = 'dvars', **kwargs):
-    """ Compute the metric value of a 4D image for a specified metric name.
-
-    Parameters
-    ----------
-    img : nibabel image
-        Functional 4D image
-    metric_name : str, optional
-        Name of the metric to compute, by default 'dvars'
-
-    Returns
-    -------
-    numpy array
-        Metric values at each timepoints (usually of size n_timepoints but could be less)
-    """
-
-    metric_func = getattr(metrics, metric_name)
-    metric_tf = metric_func(img, **kwargs)
-
-    return metric_tf
 
 def compute_outliers(metric_values, n_timepoints, detector_name = 'iqr_detector', **kwargs):
     """ Compute the outlier mask timeframe of a metric array for a specified detector.
@@ -87,7 +64,7 @@ def consensus_outliers(outlier_tfs, decision = 'all'):
 
     return outlier_decision_tf
 
-def iqr_detector(measures, iqr_proportion=1.5):
+def iqr_detector(measures, iqr_proportion=1.5, pos_only = True, neg_only = False):
     """Detect outliers in `measures` using interquartile range.
 
     Returns a boolean vector of same length as `measures`, where True means the
@@ -110,7 +87,11 @@ def iqr_detector(measures, iqr_proportion=1.5):
         Values for which we will detect outliers
     iqr_proportion : float, optional
         Scalar to multiply the IQR to form upper and lower threshold (see
-        above).  Default is 1.5.
+        above).  Default is 2.
+    pos_only : bool, optional
+        Condition to filter only values above the upper threshold.  Default is True.
+    neg_only : bool, optional
+        Condition to filter only values above the lower threshold.  Default is False.
 
     Returns
     -------
@@ -121,8 +102,51 @@ def iqr_detector(measures, iqr_proportion=1.5):
     Q1 = np.percentile(measures, 25)
     Q3 = np.percentile(measures, 75)
     IQR = Q3 - Q1
-    outlier_tf = np.logical_or(
-        measures > Q3 + iqr_proportion * IQR, measures < Q1 - iqr_proportion * IQR
-    )
+    outlier_tf = np.logical_or((not neg_only)*( measures > Q3 + iqr_proportion * IQR),
+                                (not pos_only)*(measures < Q1 - iqr_proportion * IQR))
+
+    return outlier_tf
+
+def median_detector(measures, scale = 5, pos_only = True, neg_only = False):
+    """Detect outliers in `measures` from the scaled Means Absolute Deviation.
+    
+    An outlier is any value in `measures` that is either:
+
+    * > median(measures) + scaled_MAD * `scale`
+    * < median(measures) - scaled_MAD * `scale`
+
+    where scaled_MAD is defined as `c * median(abs(measures - median(measures)))` and
+    c is `-1/sqrt(2)*erfcinv(3/2)` whichi is approxcimately equal to 1.4826
+
+    Frames with metric value that is more then three scaled MAD from the median are labeled as outliers.
+
+    See: https://en.wikipedia.org/wiki/Median_absolute_deviation
+
+    Parameters
+    ----------
+    metric : numpy array
+        Metric to detect outlier on
+    scale : int, float, optional
+        Scalar to multiply the scaled MAD to form upper and lower threshold (see
+        above).  Default is 4.
+    pos_only : bool, optional
+        Condition to filter only values above the upper threshold.  Default is True.
+    neg_only : bool, optional
+        Condition to filter only values above the lower threshold.  Default is False.
+
+    Returns
+    -------
+    numpy array (bool)
+        Outlier mask timeframe with a 1 if a frame is labeled as an outlier and 0 otherwise.
+    """
+    # Corresponding to erfcinv(3/2), to avoid importing "scipy.special" only for this
+    ERFCINV_CST = -0.4769362762044699
+
+    c = -1/(np.sqrt(2)*ERFCINV_CST)
+    # MAD is the Mean Absolute Deviation
+    scaled_mad = c * np.median(np.abs(measures - np.median(measures)))
+
+    outlier_tf = np.logical_or((not neg_only)*(measures > np.median(measures) + scale * scaled_mad),
+                                (not pos_only)*(measures < np.median(measures) - scale * scaled_mad))
 
     return outlier_tf

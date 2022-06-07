@@ -29,6 +29,27 @@ def metric_name(img):
 
 import numpy as np
 
+def compute_metric(img, metric_name = 'dvars', **kwargs):
+    """ Compute the metric value of a 4D image for a specified metric name.
+
+    Parameters
+    ----------
+    img : nibabel image
+        Functional 4D image
+    metric_name : str, optional
+        Name of the metric to compute, by default 'dvars'
+
+    Returns
+    -------
+    numpy array
+        Metric values at each timepoints (usually of size n_timepoints but could be less)
+    """
+
+    metric_func = globals()[metric_name]
+    metric_tf = metric_func(img, **kwargs)
+
+    return metric_tf
+
 def dvars(img):
     """ Calculate TEMPORAL dvars metric on Nibabel image `img`
 
