@@ -11,29 +11,6 @@ requirements are met and raise an error otherwise.
 """
 
 import numpy as np
-# This should be later removed as "compute_metric()" will be moved to "metrics.py"
-import findoutlie.metrics as metrics
-
-def compute_metric(img, metric_name = 'dvars', **kwargs):
-    """ Compute the metric value of a 4D image for a specified metric name.
-
-    Parameters
-    ----------
-    img : nibabel image
-        Functional 4D image
-    metric_name : str, optional
-        Name of the metric to compute, by default 'dvars'
-
-    Returns
-    -------
-    numpy array
-        Metric values at each timepoints (usually of size n_timepoints but could be less)
-    """
-
-    metric_func = getattr(metrics, metric_name)
-    metric_tf = metric_func(img, **kwargs)
-
-    return metric_tf
 
 def compute_outliers(metric_values, n_timepoints, detector_name = 'iqr_detector', **kwargs):
     """ Compute the outlier mask timeframe of a metric array for a specified detector.
