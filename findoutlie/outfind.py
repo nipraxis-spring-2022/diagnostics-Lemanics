@@ -8,7 +8,6 @@ import numpy as np
 
 import findoutlie.data_load as data_load
 import findoutlie.detectors as detectors
-# Unused for now
 import findoutlie.metrics as metrics
 
 
@@ -39,7 +38,6 @@ def detect_outliers(fname):
     outlier_tfs = np.zeros((n_metrics, n_timepoints))
 
     for i, (metric_name, detector_name) in enumerate(zip(metrics_list, detectors_list)):
-        # Later to be called from metrics.py
         metric = metrics.compute_metric(image, metric_name)
         outlier_tfs[i] = detectors.compute_outliers(metric, n_timepoints, detector_name)
 
