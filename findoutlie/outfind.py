@@ -27,7 +27,7 @@ def detect_outliers(fname):
     """
 
     # Configuration list for metrics and detectors names
-    CONFIG = [['dvars', 'dvars'], ['iqr_detector', 'iqr_detector']]
+    CONFIG = [['dvars', 'coefficient_of_variation'], ['median_detector', 'iqr_detector']]
 
     image = data_load.load_image(fname)
 
@@ -43,7 +43,7 @@ def detect_outliers(fname):
         metric = metrics.compute_metric(image, metric_name)
         outlier_tfs[i] = detectors.compute_outliers(metric, n_timepoints, detector_name)
 
-    outlier_decision_tf = detectors.consensus_outliers(outlier_tfs)
+    outlier_decision_tf = detectors.consensus_outliers(outlier_tfs, decision='any')
     outlier_frames_id = np.where(outlier_decision_tf > 0)[0]
 
     return list(outlier_frames_id)

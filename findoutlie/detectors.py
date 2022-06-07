@@ -64,7 +64,7 @@ def consensus_outliers(outlier_tfs, decision = 'all'):
 
     return outlier_decision_tf
 
-def iqr_detector(measures, iqr_proportion=2, pos_only = True, neg_only = False):
+def iqr_detector(measures, iqr_proportion=1.5, pos_only = True, neg_only = False):
     """Detect outliers in `measures` using interquartile range.
 
     Returns a boolean vector of same length as `measures`, where True means the
@@ -107,7 +107,7 @@ def iqr_detector(measures, iqr_proportion=2, pos_only = True, neg_only = False):
 
     return outlier_tf
 
-def median_detector(measures, scale = 4, pos_only = True, neg_only = False):
+def median_detector(measures, scale = 5, pos_only = True, neg_only = False):
     """Detect outliers in `measures` from the scaled Means Absolute Deviation.
     
     An outlier is any value in `measures` that is either:
