@@ -64,7 +64,7 @@ def consensus_outliers(outlier_tfs, decision = 'all'):
 
     return outlier_decision_tf
 
-def iqr_detector(measures, iqr_proportion=1.5, pos_only = False, neg_only = False):
+def iqr_detector(measures, iqr_proportion=2, pos_only = True, neg_only = False):
     """Detect outliers in `measures` using interquartile range.
 
     Returns a boolean vector of same length as `measures`, where True means the
@@ -87,7 +87,11 @@ def iqr_detector(measures, iqr_proportion=1.5, pos_only = False, neg_only = Fals
         Values for which we will detect outliers
     iqr_proportion : float, optional
         Scalar to multiply the IQR to form upper and lower threshold (see
-        above).  Default is 1.5.
+        above).  Default is 2.
+    pos_only : bool, optional
+        Condition to filter only values above the upper threshold.  Default is True.
+    neg_only : bool, optional
+        Condition to filter only values above the lower threshold.  Default is False.
 
     Returns
     -------
@@ -103,7 +107,7 @@ def iqr_detector(measures, iqr_proportion=1.5, pos_only = False, neg_only = Fals
 
     return outlier_tf
 
-def median_detector(measures, scale = 3, pos_only = False, neg_only = False):
+def median_detector(measures, scale = 4, pos_only = True, neg_only = False):
     """Detect outliers in `measures` from the scaled Means Absolute Deviation.
     
     An outlier is any value in `measures` that is either:
@@ -124,7 +128,11 @@ def median_detector(measures, scale = 3, pos_only = False, neg_only = False):
         Metric to detect outlier on
     scale : int, float, optional
         Scalar to multiply the scaled MAD to form upper and lower threshold (see
-        above).  Default is 3.
+        above).  Default is 4.
+    pos_only : bool, optional
+        Condition to filter only values above the upper threshold.  Default is True.
+    neg_only : bool, optional
+        Condition to filter only values above the lower threshold.  Default is False.
 
     Returns
     -------
